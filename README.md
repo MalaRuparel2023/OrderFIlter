@@ -4,5 +4,4 @@ An android OrderFilter component like Amazon, Naykaa app  built using [Jetpack C
 
 
 # Screenshots
-<img src="media/orderfilter.png" width="250" />
-<img src="media/orderfilter_amazon.jpeg" width="250" /> 
+<img src="media/orderfilter.png" width="250" />  <img src="media/orderfilter_amazon.jpeg" width="250" /> 
