@@ -49,114 +49,19 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MultiSelectScreen()
-
-                     //SingleSelectScreen()
                 }
             }
         }
     }
 }
-val filterOptions = OrderData.getFilter(OrderData.generateMonthlyStatements())
-fun chipChangeListener(item: FilterOption, checked: Boolean) =
-    filterOptions.find { it.option == item.option }?.let { task ->
-        task.selected = checked
-    }
-@Composable
-fun MultiSelectScreen() {
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-        Column {
-            // show filter options
-            FilterOptions(filterOptions)
-
-            FilterList(filterOptions)
-        }
-    }
-}
-
-@Composable
-fun FilterOptions(filterOptions: List<FilterOption>) {
-    LazyRow(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(8.dp), contentPadding = PaddingValues(horizontal = 8.dp)) {
-        items(filterOptions) { option ->
-            FilterChip(
-                filterOption = option,
-                onChipClick = {
-                    chipChangeListener(it, !it.selected)
-                    OrderData.printList(filterOptions)
-                }
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun FilterList(filterOption: List<FilterOption>) {
 
 
-    val selectedOptions = ArrayList<String>()
-    LazyColumn {
-        filterOption.forEach { option ->
 
-            if (option.selected) {
-
-                if (!selectedOptions.contains(option.option))
-                selectedOptions.add(option.option)
-
-                stickyHeader {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primary)
-                    ) {
-                        Text(
-                            text = TextUtils.join(", ", selectedOptions),
-                            modifier = Modifier
-                                .fillMaxWidth(),
-
-                            style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-
-                items(option.dateUtil) {
-
-                    OrderItem(it )
-                }
-            }
-        }
-    }
-
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     OrderFilter {
         MultiSelectScreen()
-    }
-}
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun OrderItem(order: DateUtil) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(8.dp)) {
-        Image(
-            painter = painterResource(com.ss.orderfilter.R.drawable.test),
-            contentDescription = "Order Image",
-            modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop
-        )
-
-        Spacer(Modifier.width(8.dp))
-        Column(modifier = Modifier.align(Alignment.CenterVertically)) {
-            Text(text = order.name, fontWeight = FontWeight.Bold)
-            Text(text = order.description, style = MaterialTheme.typography.bodyMedium)
-            Text(text = order.price, style = MaterialTheme.typography.bodyMedium)
-            Text(text = "Date: ${order.displayDate}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
-        }
     }
 }
